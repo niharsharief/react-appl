@@ -1,5 +1,5 @@
 # Starter pipeline
-- task: ECRPushImage@1
+ task: ECRPushImage@1
   inputs:
     awsCredentials: 'session2'
     regionName: 'us-east-1'
@@ -7,7 +7,7 @@
     sourceImageName: 'image1'
     pushTag: $(Build.BuildId)
     repositoryName: 'ecr/ecr1'
-- task: Docker@2
+ task: Docker@2
   inputs:
     containerRegistry: 'webamazon'
     command: 'buildAndPush'
@@ -16,10 +16,10 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- main
+ trigger:
+ - main
 
-pool:
+  pool:
   vmImage: ubuntu-latest
 
 steps:
