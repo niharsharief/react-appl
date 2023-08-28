@@ -9,35 +9,36 @@ variables:
   - group: ecr1
 
 
-
-- task: ECRPushImage@1
+steps:
+  - task: ECRPushImage@1
     inputs:
-    awsCredentials: 'session2'
-    regionName: 'us-east-1'
-    imageSource: 'imagename'
-- task: ECRPushImage@1
-  inputs:
-    awsCredentials: 'session2'
-    regionName: 'us-east-1'
-    imageSource: 'imagename'
-    sourceImageName: 'image1'
-    repositoryName: 'ecr/ecr1'
-    sourceImageName: 'image1'
-    pushTag: $(Build.BuildId)
-    repositoryName: 'ecr/ecr1'
-
-- task: Docker@2
+      awsCredentials: 'session2'
+      regionName: 'us-east-1'
+      imageSource: 'imagename'
+      repositoryName: 'ecr/ecr1' 
+  - task: ECRPushImage@1
     inputs:
-    containerRegistry: 'webamazon'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-- task: ECRPushImage@1
-  inputs:
-    awsCredentials: 'session2'
-    regionName: 'us-east-1'
-    imageSource: 'imagename'
-    sourceImageName: 'image1'
-    repositoryName: 'ecr/ecr1'
+      awsCredentials: 'session2'
+      regionName: 'us-east-1'
+      imageSource: 'imagename'
+      sourceImageName: 'image1'
+      repositoryName: 'ecr/ecr1'
+      PushTag: $(Build.BuildId)
+      
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'webamazon'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+
+  - task: ECRPushImage@1
+    inputs:
+      awsCredentials: 'session2'
+      regionName: 'us-east-1'
+      imageSource: 'imagename'
+      sourceImageName: 'image1'
+      repositoryName: 'ecr/ecr1'
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
